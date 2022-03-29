@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:quotes_app/constants.dart';
 
+import 'api/api.dart';
 import 'home_page.dart';
 
-void main() {
+Future<void> main() async {
+  await API().initDio();
   runApp(MyApp());
 }
 
