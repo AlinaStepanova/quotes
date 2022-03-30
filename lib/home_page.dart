@@ -31,6 +31,38 @@ class _HomePageState extends State<HomePage> {
         child: Stack(
           children: [
             Padding(
+              padding: EdgeInsets.only(right: width * 0.05),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  ClipOval(
+                    child: Material(
+                      color: Colors.white,
+                      child: InkWell(
+                        splashColor: Colors.lightBlueAccent[200],
+                        onTap: () {},
+                        child: SizedBox(
+                            width: 44,
+                            height: 44,
+                            child: Icon(Icons.star_outline)),
+                      ),
+                    ),
+                  ),
+                  ClipOval(
+                    child: Material(
+                      color: Colors.white,
+                      child: InkWell(
+                        splashColor: Colors.lightBlueAccent[200],
+                        onTap: () {},
+                        child: SizedBox(
+                            width: 44, height: 44, child: Icon(Icons.share)),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Padding(
               padding: EdgeInsets.only(
                   left: width * 0.075,
                   right: width * 0.075,
@@ -49,26 +81,25 @@ class _HomePageState extends State<HomePage> {
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Padding(
-                                  padding:
-                                      EdgeInsets.only(right: width * 0.025),
-                                  child: Text(
-                                    "\u275d",
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(fontSize: width * 0.25),
-                                  ),
-                                ),
                                 Flexible(
                                   child: Text(
                                     quote?.quote ?? "",
-                                    textAlign: TextAlign.end,
+                                    textAlign: TextAlign.start,
                                     style: TextStyle(fontSize: width * 0.06),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(left: width * 0.025),
+                                  child: Text(
+                                    "\u275e",
+                                    textAlign: TextAlign.start,
+                                    style: TextStyle(fontSize: width * 0.25),
                                   ),
                                 ),
                               ],
                             ),
                             Align(
-                              alignment: Alignment.topRight,
+                              alignment: Alignment.topLeft,
                               child: Padding(
                                 padding: EdgeInsets.only(top: 8),
                                 child: Text(
@@ -97,24 +128,27 @@ class _HomePageState extends State<HomePage> {
 
   Padding buildNextQuoteButton(double width, double height) {
     return Padding(
-      padding: EdgeInsets.only(bottom: height * 0.2),
+      padding: EdgeInsets.only(
+        bottom: height * 0.2,
+        right: width * 0.075,
+      ),
       child: Align(
-        alignment: Alignment.bottomCenter,
-        child: OutlinedButton(
-          style: OutlinedButton.styleFrom(
-              backgroundColor: Colors.white,
-              elevation: 0.5,
-              side: BorderSide.none,
-              textStyle: TextStyle(
-                  fontSize: width * 0.05,
-                  fontFamily: Constants.defaultFontFamily),
-              padding: EdgeInsets.symmetric(
-                  vertical: width * 0.04, horizontal: width * 0.1),
-              shape: StadiumBorder()),
-          onPressed: () {
-            getRandomQuote();
-          },
-          child: const Text('Next Quote'),
+        alignment: Alignment.bottomRight,
+        child: ClipOval(
+          child: Material(
+            color: Colors.white,
+            child: InkWell(
+              splashColor: Colors.lightBlueAccent[200],
+              onTap: () {
+                setState(() => quote = null);
+                getRandomQuote();
+              },
+              child: SizedBox(
+                  width: 56,
+                  height: 56,
+                  child: Icon(Icons.arrow_forward_ios_rounded, size: 36)),
+            ),
+          ),
         ),
       ),
     );
@@ -122,8 +156,6 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> getRandomQuote() async {
     var randomQuote = await API().client.getRandomQuote();
-    setState(() {
-      quote = randomQuote;
-    });
+    setState(() => quote = randomQuote);
   }
 }
