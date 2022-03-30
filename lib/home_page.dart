@@ -1,8 +1,7 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:quotes_app/api/rest_client.dart';
 import 'package:quotes_app/constants.dart';
+import 'package:share_plus/share_plus.dart';
 import 'api/api.dart';
 
 class HomePage extends StatefulWidget {
@@ -44,7 +43,8 @@ class _HomePageState extends State<HomePage> {
                         child: SizedBox(
                             width: 44,
                             height: 44,
-                            child: Icon(Icons.star_outline)),
+                            child:
+                                Icon(Icons.star_outline, color: Colors.black)),
                       ),
                     ),
                   ),
@@ -53,9 +53,11 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.white,
                       child: InkWell(
                         splashColor: Colors.lightBlueAccent[200],
-                        onTap: () {},
+                        onTap: () => _onShare(context),
                         child: SizedBox(
-                            width: 44, height: 44, child: Icon(Icons.share)),
+                            width: 44,
+                            height: 44,
+                            child: Icon(Icons.share, color: Colors.black)),
                       ),
                     ),
                   )
@@ -146,7 +148,8 @@ class _HomePageState extends State<HomePage> {
               child: SizedBox(
                   width: 56,
                   height: 56,
-                  child: Icon(Icons.arrow_forward_ios_rounded, size: 36)),
+                  child: Icon(Icons.arrow_forward_ios_rounded,
+                      size: 36, color: Colors.black)),
             ),
           ),
         ),
@@ -157,5 +160,12 @@ class _HomePageState extends State<HomePage> {
   Future<void> getRandomQuote() async {
     var randomQuote = await API().client.getRandomQuote();
     setState(() => quote = randomQuote);
+  }
+
+  void _onShare(BuildContext context) async {
+    final box = context.findRenderObject() as RenderBox?;
+    await Share.share(Constants.appName,
+        subject: quote?.quote ?? "",
+        sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);
   }
 }
