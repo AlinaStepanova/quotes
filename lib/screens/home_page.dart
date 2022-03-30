@@ -71,7 +71,9 @@ class _HomePageState extends State<HomePage> {
                                   child: Text(
                                     "\u275e",
                                     textAlign: TextAlign.start,
-                                    style: TextStyle(fontSize: width * 0.25),
+                                    style: TextStyle(
+                                        fontSize: width * 0.25,
+                                        color: Constants.primaryColor),
                                   ),
                                 ),
                               ],
@@ -93,7 +95,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       )
                     : Container(
-                        child: Center(child: Text("Loading...")),
+                        child: CircularProgressIndicator(),
                       ),
               ),
             ),
