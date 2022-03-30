@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         ),
         fontFamily: Constants.defaultFontFamily,
         colorScheme: ColorScheme.fromSwatch().copyWith(
-            primary: Colors.white, secondary: Colors.lightBlueAccent[200]),
+            primary: Colors.lightBlueAccent[200], secondary: Colors.lightBlueAccent[200]),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       builder: (context, child) {
