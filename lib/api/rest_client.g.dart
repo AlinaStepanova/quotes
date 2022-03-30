@@ -10,14 +10,12 @@ Quote _$QuoteFromJson(Map<String, dynamic> json) => Quote(
       id: json['id'] as int,
       author: json['author'] as String,
       quote: json['quote'] as String,
-      permalink: json['permalink'] as String,
     );
 
 Map<String, dynamic> _$QuoteToJson(Quote instance) => <String, dynamic>{
       'id': instance.id,
       'author': instance.author,
       'quote': instance.quote,
-      'permalink': instance.permalink,
     };
 
 // **************************************************************************
@@ -28,7 +26,7 @@ Map<String, dynamic> _$QuoteToJson(Quote instance) => <String, dynamic>{
 
 class _RestClient implements RestClient {
   _RestClient(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'http://quotes.stormconsultancy.co.uk';
+    baseUrl ??= 'http://quotes.stormconsultancy.co.uk/';
   }
 
   final Dio _dio;
@@ -44,7 +42,7 @@ class _RestClient implements RestClient {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<Quote>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/random.json',
+                .compose(_dio.options, 'random.json',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Quote.fromJson(_result.data!);

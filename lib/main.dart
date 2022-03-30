@@ -19,8 +19,12 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: Constants.appName,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSwatch()
-            .copyWith(primary: Colors.white, secondary: Colors.lightBlueAccent[200]),
+        textTheme: TextTheme().apply(
+          bodyColor: Constants.textColor,
+        ),
+        fontFamily: Constants.defaultFontFamily,
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+            primary: Colors.white, secondary: Colors.lightBlueAccent[200]),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       builder: (context, child) {
