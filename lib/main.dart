@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:quotes_app/constants.dart';
+import 'package:quotes_app/utils/constants.dart';
 
 import 'api/api.dart';
-import 'home_page.dart';
+import 'screens/home_page.dart';
 
 Future<void> main() async {
   await API().initDio();
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         ),
         fontFamily: Constants.defaultFontFamily,
         colorScheme: ColorScheme.fromSwatch().copyWith(
-            primary: Colors.lightBlueAccent[200], secondary: Colors.lightBlueAccent[200]),
+            primary: Constants.primaryColor, secondary: Constants.primaryColor),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       builder: (context, child) {

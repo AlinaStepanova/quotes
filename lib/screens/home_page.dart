@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:quotes_app/api/rest_client.dart';
-import 'package:quotes_app/constants.dart';
+import 'package:quotes_app/utils/constants.dart';
 import 'package:share_plus/share_plus.dart';
-import 'api/api.dart';
+import '../api/api.dart';
+import '../widgets/icon_with_action.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -34,33 +35,8 @@ class _HomePageState extends State<HomePage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  ClipOval(
-                    child: Material(
-                      color: Colors.white,
-                      child: InkWell(
-                        splashColor: Colors.lightBlueAccent[200],
-                        onTap: () {},
-                        child: SizedBox(
-                            width: 44,
-                            height: 44,
-                            child:
-                                Icon(Icons.star_outline, color: Colors.black)),
-                      ),
-                    ),
-                  ),
-                  ClipOval(
-                    child: Material(
-                      color: Colors.white,
-                      child: InkWell(
-                        splashColor: Colors.lightBlueAccent[200],
-                        onTap: () => _onShare(context),
-                        child: SizedBox(
-                            width: 44,
-                            height: 44,
-                            child: Icon(Icons.share, color: Colors.black)),
-                      ),
-                    ),
-                  )
+                  IconWithAction(Icons.star_outline, 44, 24, () => {}),
+                  IconWithAction(Icons.share, 44, 24, () => _onShare(context)),
                 ],
               ),
             ),
@@ -136,25 +112,15 @@ class _HomePageState extends State<HomePage> {
       ),
       child: Align(
         alignment: Alignment.bottomRight,
-        child: ClipOval(
-          child: Material(
-            color: Colors.white,
-            child: InkWell(
-              splashColor: Colors.lightBlueAccent[200],
-              onTap: () {
-                setState(() => quote = null);
-                getRandomQuote();
-              },
-              child: SizedBox(
-                  width: 56,
-                  height: 56,
-                  child: Icon(Icons.arrow_forward_ios_rounded,
-                      size: 36, color: Colors.black)),
-            ),
-          ),
-        ),
+        child: IconWithAction(
+            Icons.arrow_forward_ios_rounded, 56, 36, () => loadNextQuote()),
       ),
     );
+  }
+
+  void loadNextQuote() {
+    setState(() => quote = null);
+    getRandomQuote();
   }
 
   Future<void> getRandomQuote() async {
