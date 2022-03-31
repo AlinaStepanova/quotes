@@ -41,8 +41,10 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         // IconWithAction(Icons.star_outline, width * 0.1,
                         //     width * 0.075, () => {}),
-                        IconWithAction(Icons.share, width * 0.125, width * 0.07,
-                            () => _onShare(context)),
+                        IconWithAction(
+                          Icons.share,
+                          () => _onShare(context),
+                        ),
                       ],
                     ),
                   ),
@@ -119,8 +121,9 @@ class _HomePageState extends State<HomePage> {
       ),
       child: Align(
         alignment: Alignment.bottomRight,
-        child: IconWithAction(Icons.arrow_forward_ios_rounded, width * 0.15,
-            width * 0.1, () => loadNextQuote()),
+        child: IconWithAction(
+            Icons.arrow_forward_ios_rounded, () => loadNextQuote(),
+            size: width * 0.15, iconSize: width * 0.1),
       ),
     );
   }
