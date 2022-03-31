@@ -34,13 +34,15 @@ class _HomePageState extends State<HomePage> {
             ? Stack(
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(right: width * 0.05),
+                    padding: EdgeInsets.only(
+                        top: width * 0.025, right: width * 0.05),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        IconWithAction(Icons.star_outline, 44, 24, () => {}),
-                        IconWithAction(
-                            Icons.share, 44, 24, () => _onShare(context)),
+                        // IconWithAction(Icons.star_outline, width * 0.1,
+                        //     width * 0.075, () => {}),
+                        IconWithAction(Icons.share, width * 0.125, width * 0.07,
+                            () => _onShare(context)),
                       ],
                     ),
                   ),
@@ -117,8 +119,8 @@ class _HomePageState extends State<HomePage> {
       ),
       child: Align(
         alignment: Alignment.bottomRight,
-        child: IconWithAction(
-            Icons.arrow_forward_ios_rounded, 56, 36, () => loadNextQuote()),
+        child: IconWithAction(Icons.arrow_forward_ios_rounded, width * 0.15,
+            width * 0.1, () => loadNextQuote()),
       ),
     );
   }
