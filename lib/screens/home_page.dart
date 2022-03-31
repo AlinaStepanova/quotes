@@ -44,68 +44,66 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: width * 0.075, vertical: height * 0.05),
-                    child: Container(
-                        alignment: Alignment.center,
-                        width: width,
-                        height: height * 0.9,
-                        child: SingleChildScrollView(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Flexible(
-                                    child: Text(
-                                      quote?.quote ?? "",
-                                      key: Key('quote'),
-                                      textAlign: TextAlign.start,
-                                      style: TextStyle(
-                                          fontSize: kIsWeb
-                                              ? width * 0.03
-                                              : width * 0.06),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.only(left: width * 0.025),
-                                    child: kIsWeb
-                                        ? Icon(Icons.format_quote_rounded,
-                                            size: width * 0.25,
-                                            color: Constants.primaryColor)
-                                        : Text(
-                                            "\u275e",
-                                            textAlign: TextAlign.start,
-                                            style: TextStyle(
-                                                fontSize: width * 0.25,
-                                                color: Constants.primaryColor),
-                                          ),
-                                  ),
-                                ],
-                              ),
-                              Align(
-                                alignment: Alignment.topLeft,
-                                child: Padding(
-                                  padding: EdgeInsets.only(top: 8),
+                  Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: width * 0.075, vertical: height * 0.05),
+                      alignment: Alignment.center,
+                      width: width,
+                      height: height * 0.9,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Row(
+                              crossAxisAlignment: kIsWeb
+                                  ? CrossAxisAlignment.center
+                                  : CrossAxisAlignment.start,
+                              children: [
+                                Flexible(
                                   child: Text(
-                                    quote?.author ?? "",
-                                    textAlign: TextAlign.end,
+                                    quote?.quote ?? "",
+                                    key: Key('quote'),
+                                    textAlign: TextAlign.start,
                                     style: TextStyle(
                                         fontSize: kIsWeb
-                                            ? width * 0.02
-                                            : width * 0.04,
-                                        fontStyle: FontStyle.italic),
+                                            ? width * 0.03
+                                            : width * 0.06),
                                   ),
                                 ),
+                                Padding(
+                                  padding: EdgeInsets.only(left: width * 0.025),
+                                  child: kIsWeb
+                                      ? Icon(Icons.format_quote_rounded,
+                                          size: width * 0.25,
+                                          color: Constants.primaryColor)
+                                      : Text(
+                                          "\u275e",
+                                          textAlign: TextAlign.start,
+                                          style: TextStyle(
+                                              fontSize: width * 0.25,
+                                              color: Constants.primaryColor),
+                                        ),
+                                ),
+                              ],
+                            ),
+                            Align(
+                              alignment: Alignment.topLeft,
+                              child: Padding(
+                                padding: EdgeInsets.only(top: 8),
+                                child: Text(
+                                  quote?.author ?? "",
+                                  textAlign: TextAlign.end,
+                                  style: TextStyle(
+                                      fontSize:
+                                          kIsWeb ? width * 0.02 : width * 0.04,
+                                      fontStyle: FontStyle.italic),
+                                ),
                               ),
-                            ],
-                          ),
-                        )),
-                  ),
+                            ),
+                          ],
+                        ),
+                      )),
                   buildNextQuoteButton(width, height),
                 ],
               )
