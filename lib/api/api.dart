@@ -15,12 +15,9 @@ class API {
 
   late Dio dio;
   late RestClient client;
-  late StreamController _errorListener;
-  Stream get fetchErrors => _errorListener.stream;
 
   Future initDio() async {
-    _errorListener = new StreamController.broadcast();
-    dio = Dio(); // Provide a dio instance
+    dio = Dio();
 
     dio.options.baseUrl = host;
 
@@ -30,16 +27,12 @@ class API {
     dio.options.contentType = Headers.contentTypeHeader;
 
     dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
-      return handler.next(options); 
+      return handler.next(options);
     }, onResponse: (response, handler) {
-      if (response.statusCode == 500) {
-        return null;
-      }
-      return handler.next(response); 
+      return handler.next(response);
     }, onError: (DioError e, handler) {
       print(e);
-      _errorListener.add(e);
-      return handler.next(e); 
+      return handler.next(e);
     }));
 
     client = RestClient(dio, baseUrl: dio.options.baseUrl);

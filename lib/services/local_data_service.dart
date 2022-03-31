@@ -4,17 +4,16 @@ import 'dart:math';
 import 'package:flutter/services.dart';
 import 'package:quotes_app/api/rest_client.dart';
 
-class QuotesService {
-  static final QuotesService _quotesService = QuotesService._internal();
-  QuotesService._internal();
-  factory QuotesService() {
+class LocalDataService {
+  static final LocalDataService _quotesService = LocalDataService._internal();
+  LocalDataService._internal();
+  factory LocalDataService() {
     return _quotesService;
   }
 
   List<Quote>? _localQuotes = null;
 
   Future<List<Quote>> _readQuotesFromJson() async {
-    print("1");
     final String response = await rootBundle.loadString('assets/quotes.json');
     final parsed = jsonDecode(response).cast<Map<String, dynamic>>();
 
@@ -22,14 +21,12 @@ class QuotesService {
   }
 
   Future<Quote> _getRandomQuote(List<Quote> quotes) async {
-    print("2");
     final _random = new Random();
     var quote = quotes[_random.nextInt(quotes.length)];
     return quote;
   }
 
-  Future<Quote> getQuote() async {
-    print("3");
+  Future<Quote> getLocalQuote() async {
     if (_localQuotes == null) {
       _localQuotes = await _readQuotesFromJson();
     }
