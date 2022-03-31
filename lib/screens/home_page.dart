@@ -4,6 +4,7 @@ import 'package:quotes_app/utils/constants.dart';
 import 'package:share_plus/share_plus.dart';
 import '../services/quotes_repository.dart';
 import '../widgets/icon_with_action.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -31,57 +32,58 @@ class _HomePageState extends State<HomePage> {
         child: (quote != null)
             ? Stack(
                 children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                        top: width * 0.025, right: width * 0.05),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        // IconWithAction(Icons.star_outline, width * 0.1,
-                        //     width * 0.075, () => {}),
-                        IconWithAction(
+                  if (!kIsWeb)
+                    Padding(
+                      padding: EdgeInsets.only(
+                          top: width * 0.05, right: width * 0.05),
+                      child: Align(
+                        alignment: Alignment.topRight,
+                        child: IconWithAction(
                           Icons.share,
                           () => _onShare(context),
                         ),
-                      ],
+                      ),
                     ),
-                  ),
                   Padding(
-                    padding: EdgeInsets.only(
-                        left: width * 0.075,
-                        right: width * 0.075,
-                        top: height * 0.05,
-                        bottom: height * 0.05),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: width * 0.075, vertical: height * 0.05),
                     child: Container(
                         alignment: Alignment.center,
                         width: width,
-                        height: height * 0.8,
+                        height: height * 0.9,
                         child: SingleChildScrollView(
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Flexible(
                                     child: Text(
                                       quote?.quote ?? "",
                                       key: Key('quote'),
                                       textAlign: TextAlign.start,
-                                      style: TextStyle(fontSize: width * 0.06),
+                                      style: TextStyle(
+                                          fontSize: kIsWeb
+                                              ? width * 0.03
+                                              : width * 0.06),
                                     ),
                                   ),
                                   Padding(
                                     padding:
                                         EdgeInsets.only(left: width * 0.025),
-                                    child: Text(
-                                      "\u275e",
-                                      textAlign: TextAlign.start,
-                                      style: TextStyle(
-                                          fontSize: width * 0.25,
-                                          color: Constants.primaryColor),
-                                    ),
+                                    child: kIsWeb
+                                        ? Icon(Icons.format_quote_rounded,
+                                            size: width * 0.25,
+                                            color: Constants.primaryColor)
+                                        : Text(
+                                            "\u275e",
+                                            textAlign: TextAlign.start,
+                                            style: TextStyle(
+                                                fontSize: width * 0.25,
+                                                color: Constants.primaryColor),
+                                          ),
                                   ),
                                 ],
                               ),
@@ -93,7 +95,9 @@ class _HomePageState extends State<HomePage> {
                                     quote?.author ?? "",
                                     textAlign: TextAlign.end,
                                     style: TextStyle(
-                                        fontSize: width * 0.04,
+                                        fontSize: kIsWeb
+                                            ? width * 0.02
+                                            : width * 0.04,
                                         fontStyle: FontStyle.italic),
                                   ),
                                 ),
@@ -115,14 +119,16 @@ class _HomePageState extends State<HomePage> {
   Padding buildNextQuoteButton(double width, double height) {
     return Padding(
       padding: EdgeInsets.only(
-        bottom: height * 0.2,
+        bottom: height * 0.1,
         right: width * 0.075,
       ),
       child: Align(
         alignment: Alignment.bottomRight,
         child: IconWithAction(
             Icons.arrow_forward_ios_rounded, () => loadNextQuote(),
-            size: width * 0.15, iconSize: width * 0.1, key: Key('nextQuote')),
+            size: kIsWeb ? height * 0.15 : width * 0.15,
+            iconSize: kIsWeb ? height * 0.1 : width * 0.1,
+            key: Key('nextQuote')),
       ),
     );
   }

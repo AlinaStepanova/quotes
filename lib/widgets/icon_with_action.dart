@@ -3,12 +3,12 @@ import 'package:quotes_app/utils/constants.dart';
 
 class IconWithAction extends StatefulWidget {
   final IconData icon;
-  final Function call;
+  final Function onClick;
   final double? size;
   final double? iconSize;
   final Key? key;
 
-  const IconWithAction(this.icon, this.call,
+  const IconWithAction(this.icon, this.onClick,
       {this.size, this.iconSize, this.key})
       : super(key: key);
   @override
@@ -24,7 +24,7 @@ class _IconWithActionState extends State<IconWithAction> {
         color: Colors.white,
         child: InkWell(
           splashColor: Constants.primaryColor,
-          onTap: () => widget.call(),
+          onTap: () => widget.onClick(),
           child: SizedBox(
               width: widget.size ?? width * 0.1,
               height: widget.size ?? width * 0.1,
