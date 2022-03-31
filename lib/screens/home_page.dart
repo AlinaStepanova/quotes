@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quotes_app/api/rest_client.dart';
+import 'package:quotes_app/services/quotes_service.dart';
 import 'package:quotes_app/utils/constants.dart';
 import 'package:share_plus/share_plus.dart';
 import '../api/api.dart';
@@ -126,6 +127,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> getRandomQuote() async {
+    //var randomQuote = await QuotesService().getQuote();
     var randomQuote = await API().client.getRandomQuote();
     setState(() => quote = randomQuote);
   }
