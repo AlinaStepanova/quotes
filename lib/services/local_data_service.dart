@@ -20,7 +20,7 @@ class LocalDataService {
     return parsed.map<Quote>((json) => Quote.fromJson(json)).toList();
   }
 
-  Future<Quote> _getRandomQuote(List<Quote> quotes) async {
+  Quote _getRandomQuote(List<Quote> quotes) {
     final _random = new Random();
     var quote = quotes[_random.nextInt(quotes.length)];
     return quote;
