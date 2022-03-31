@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quotes_app/api/rest_client.dart';
-import 'package:quotes_app/services/local_data_service.dart';
 import 'package:quotes_app/utils/constants.dart';
 import 'package:share_plus/share_plus.dart';
-import '../api/api.dart';
 import '../services/quotes_repository.dart';
 import '../widgets/icon_with_action.dart';
 
@@ -69,6 +67,7 @@ class _HomePageState extends State<HomePage> {
                                   Flexible(
                                     child: Text(
                                       quote?.quote ?? "",
+                                      key: Key('quote'),
                                       textAlign: TextAlign.start,
                                       style: TextStyle(fontSize: width * 0.06),
                                     ),
@@ -123,7 +122,7 @@ class _HomePageState extends State<HomePage> {
         alignment: Alignment.bottomRight,
         child: IconWithAction(
             Icons.arrow_forward_ios_rounded, () => loadNextQuote(),
-            size: width * 0.15, iconSize: width * 0.1),
+            size: width * 0.15, iconSize: width * 0.1, key: Key('nextQuote')),
       ),
     );
   }

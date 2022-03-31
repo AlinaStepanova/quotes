@@ -6,8 +6,11 @@ class IconWithAction extends StatefulWidget {
   final Function call;
   final double? size;
   final double? iconSize;
+  final Key? key;
 
-  const IconWithAction(this.icon, this.call, {this.size, this.iconSize});
+  const IconWithAction(this.icon, this.call,
+      {this.size, this.iconSize, this.key})
+      : super(key: key);
   @override
   _IconWithActionState createState() => _IconWithActionState();
 }
