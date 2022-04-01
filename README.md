@@ -1,6 +1,6 @@
 # Quotes
 
-The app shows a randowm quote
+The app shows a random quote
 
 API - http://quotes.stormconsultancy.co.uk/api
 
