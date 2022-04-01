@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:quotes_app/constants.dart';
+import 'package:quotes/utils/constants.dart';
 
-import 'home_page.dart';
+import 'api/api.dart';
+import 'screens/home_page.dart';
 
-void main() {
+Future<void> main() async {
+  await API().initDio();
   runApp(MyApp());
 }
 
@@ -17,8 +19,14 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: Constants.appName,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSwatch()
-            .copyWith(primary: Colors.white, secondary: Colors.lightBlueAccent[200]),
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        textTheme: TextTheme().apply(
+          bodyColor: Constants.textColor,
+        ),
+        fontFamily: Constants.defaultFontFamily,
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+            primary: Constants.primaryColor, secondary: Constants.primaryColor),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       builder: (context, child) {
