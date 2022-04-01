@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quotes_app/utils/constants.dart';
+import 'package:quotes/utils/constants.dart';
 
 class IconWithAction extends StatefulWidget {
   final IconData icon;

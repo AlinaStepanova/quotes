@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:quotes_app/api/rest_client.dart';
-import 'package:quotes_app/utils/constants.dart';
 import 'package:share_plus/share_plus.dart';
+import '../api/rest_client.dart';
 import '../services/quotes_repository.dart';
+import '../utils/constants.dart';
 import '../widgets/icon_with_action.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    getRandomQuote();
+    _getRandomQuote();
   }
 
   @override
@@ -109,7 +109,7 @@ class _HomePageState extends State<HomePage> {
       child: Align(
         alignment: Alignment.bottomRight,
         child: IconWithAction(
-            Icons.arrow_forward_ios_rounded, () => loadNextQuote(),
+            Icons.arrow_forward_ios_rounded, () => _loadNextQuote(),
             size: kIsWeb ? height * 0.15 : width * 0.15,
             iconSize: kIsWeb ? height * 0.1 : width * 0.1,
             key: Key('nextQuote')),
@@ -117,12 +117,12 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void loadNextQuote() {
+  void _loadNextQuote() {
     setState(() => quote = null);
-    getRandomQuote();
+    _getRandomQuote();
   }
 
-  Future<void> getRandomQuote() async {
+  Future<void> _getRandomQuote() async {
     var randomQuote = await QuotesRepository().getQuote();
     setState(() => quote = randomQuote);
   }

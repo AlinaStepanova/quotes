@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/services.dart';
-import 'package:quotes_app/api/rest_client.dart';
+import 'package:quotes/api/rest_client.dart';
 
 class LocalDataService {
   static final LocalDataService _quotesService = LocalDataService._internal();

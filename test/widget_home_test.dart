@@ -1,8 +1,7 @@
+import 'package:quotes/main.dart';
+import 'package:quotes/widgets/icon_with_action.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:quotes_app/main.dart';
-import 'package:quotes_app/widgets/icon_with_action.dart';
 
 void main() {
   testWidgets('Initial screen with progress bar test',
