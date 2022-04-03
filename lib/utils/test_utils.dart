@@ -7,6 +7,8 @@ abstract class QuoteRemoteDataSource {
   Future<Quote> getRandomQuote();
 }
 
+//The porpuse of this class is to provide a custom error
+//in order to test the scenario when API request failer
 class QuoteRemoteDataSourceImpl implements QuoteRemoteDataSource {
   QuoteRemoteDataSourceImpl({
     required this.client,
