@@ -5,7 +5,7 @@ import '../api/api.dart';
 import '../api/rest_client.dart';
 import 'local_data_service.dart';
 
-class QuotesRepository {
+class QuotesRepository with ChangeNotifier {
   static final QuotesRepository _quotesService = QuotesRepository._internal();
   QuotesRepository._internal();
   factory QuotesRepository() {
@@ -15,18 +15,26 @@ class QuotesRepository {
   final _api = API();
   final _localData = LocalDataService();
 
-  Future<Quote?> getQuote([ConnectivityResult? connectionStatus]) async {
-    Quote? quote = null;
+  Quote? _quote = null;
+  Quote? get quote => _quote;
+
+  Future<void> getQuote([ConnectivityResult? connectionStatus]) async {
     if (connectionStatus == ConnectivityResult.none) {
-      quote = await _localData.getLocalQuote();
+      _quote = await _localData.getLocalQuote();
     } else {
       try {
-        quote = await _api.client.getRandomQuote();
+        _quote = await _api.client.getRandomQuote();
       } catch (e) {
-        quote = await _localData.getLocalQuote();
+        _quote = await _localData.getLocalQuote();
       }
     }
-    return quote;
+
+    notifyListeners();
+  }
+
+  void resetSate() {
+    _quote = null;
+    notifyListeners();
   }
 
   @visibleForTesting

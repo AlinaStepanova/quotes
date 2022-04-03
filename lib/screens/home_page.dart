@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
-import '../api/rest_client.dart';
 import '../services/quotes_repository.dart';
 import '../utils/constants.dart';
 import '../widgets/icon_with_action.dart';
@@ -23,7 +23,6 @@ class _HomePageState extends State<HomePage> {
   ConnectivityResult _connectionStatus = ConnectivityResult.none;
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
-  Quote? quote = null;
 
   @override
   void initState() {
@@ -47,7 +46,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-          child: (quote != null)
+          child: (context.watch<QuotesRepository>().quote != null)
               ? Stack(children: [
                   if (!kIsWeb)
                     Padding(
@@ -77,7 +76,8 @@ class _HomePageState extends State<HomePage> {
                                   : CrossAxisAlignment.start,
                               children: [
                                 Flexible(
-                                  child: Text(quote?.quote ?? "",
+                                  child: Text(
+                                      '${context.watch<QuotesRepository>().quote?.quote ?? ""}',
                                       key: Key('quote'),
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
@@ -102,7 +102,8 @@ class _HomePageState extends State<HomePage> {
                             alignment: Alignment.topLeft,
                             child: Padding(
                               padding: EdgeInsets.only(top: 8),
-                              child: Text(quote?.author ?? "",
+                              child: Text(
+                                  '${context.watch<QuotesRepository>().quote?.author ?? ""}',
                                   textAlign: TextAlign.end,
                                   style: TextStyle(
                                       fontSize:
@@ -140,19 +141,18 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _loadNextQuote() {
-    setState(() => quote = null);
+    context.read<QuotesRepository>().resetSate();
     _getRandomQuote(_connectionStatus);
   }
 
   Future<void> _getRandomQuote([ConnectivityResult? connectionStatus]) async {
-    var randomQuote = await QuotesRepository().getQuote(connectionStatus);
-    setState(() => quote = randomQuote);
+    await context.read<QuotesRepository>().getQuote(connectionStatus);
   }
 
   void _onShare(BuildContext context) async {
     final box = context.findRenderObject() as RenderBox?;
     await Share.share(Constants.appName,
-        subject: quote?.quote ?? "",
+        subject: context.watch<QuotesRepository>().quote?.quote ?? "",
         sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);
   }
 

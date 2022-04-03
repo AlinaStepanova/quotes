@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:quotes/services/quotes_repository.dart';
 import 'package:quotes/utils/constants.dart';
 
 import 'api/api.dart';
@@ -8,7 +10,14 @@ import 'screens/home_page.dart';
 
 Future<void> main() async {
   await API().initDio();
-  runApp(MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => QuotesRepository()),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
