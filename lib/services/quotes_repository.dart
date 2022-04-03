@@ -1,3 +1,4 @@
+import 'package:connectivity_plus_platform_interface/src/enums.dart';
 import 'package:flutter/material.dart';
 
 import '../api/api.dart';
@@ -14,14 +15,17 @@ class QuotesRepository {
   final _api = API();
   final _localData = LocalDataService();
 
-  Future<Quote?> getQuote() async {
+  Future<Quote?> getQuote([ConnectivityResult? connectionStatus]) async {
     Quote? quote = null;
-    try {
-      quote = await _api.client.getRandomQuote();
-    } catch (e) {
+    if (connectionStatus == ConnectivityResult.none) {
       quote = await _localData.getLocalQuote();
+    } else {
+      try {
+        quote = await _api.client.getRandomQuote();
+      } catch (e) {
+        quote = await _localData.getLocalQuote();
+      }
     }
-
     return quote;
   }
 
