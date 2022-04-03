@@ -10,6 +10,8 @@ import '../widgets/icon_with_action.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
+import '../widgets/offline_status_bar.dart';
+
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
 
@@ -111,6 +113,10 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ))),
                   buildNextQuoteButton(width, height),
+                  OfflineStatusBar(
+                      isOffline: _connectionStatus == ConnectivityResult.none,
+                      height: height,
+                      width: width)
                 ])
               : Center(child: CircularProgressIndicator())),
     );
