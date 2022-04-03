@@ -5,6 +5,7 @@ class Constants {
   static const timeoutInMillis = 5000;
   static const appName = "Quotes";
   static const defaultFontFamily = 'PlayfairDisplay';
+  static const offlineText = "You are offline";
   static const textColor = Colors.black;
   static final primaryColor = Colors.lightBlueAccent[200];
 }
