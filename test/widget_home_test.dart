@@ -34,7 +34,7 @@ void main() {
 
     expect(progress, findsNothing);
     expect(buttons, findsNWidgets(2));
-    expect(anyText, findsNWidgets(3));
+    expect(anyText, findsNWidgets(4));
 
     var quoteText = find.byKey(Key('quote'));
     expect(quoteText, findsOneWidget);
