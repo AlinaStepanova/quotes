@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:quotes/utils/constants.dart';
 
+import 'api/api.dart';
 import 'screens/home_page.dart';
 
 Future<void> main() async {
+  await API().initDio();
   runApp(MyApp());
 }
 
