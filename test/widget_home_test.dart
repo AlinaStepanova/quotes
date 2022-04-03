@@ -6,26 +6,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  // testWidgets('Initial screen with progress bar test',
-  //     (WidgetTester tester) async {
-  //   await tester.runAsync(() async {
-  //     await tester.pumpWidget(MultiProvider(
-  //       providers: [
-  //         ChangeNotifierProvider(create: (_) => QuotesRepository()),
-  //       ],
-  //       child: MyApp(),
-  //     ));
+  testWidgets('Initial screen with progress bar test',
+      (WidgetTester tester) async {
+    await tester.runAsync(() async {
+      await tester.pumpWidget(MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => QuotesRepository()),
+        ],
+        child: MyApp(),
+      ));
 
-  //     var progress = find.byType(CircularProgressIndicator);
-  //     expect(progress, findsOneWidget);
+      var progress = find.byType(CircularProgressIndicator);
+      expect(progress, findsOneWidget);
 
-  //     var nextButton = find.byType(IconWithAction);
-  //     expect(nextButton, findsNothing);
+      var nextButton = find.byType(IconWithAction);
+      expect(nextButton, findsNothing);
 
-  //     var anyText = find.byType(Text);
-  //     expect(anyText, findsNothing);
-  //   });
-  // });
+      var anyText = find.byType(Text);
+      expect(anyText, findsNothing);
+    });
+  });
 
   testWidgets('First quote loaded test', (WidgetTester tester) async {
     await tester.runAsync(() async {
@@ -49,7 +49,7 @@ void main() {
 
       expect(progress, findsNothing);
       expect(buttons, findsNWidgets(2));
-      expect(anyText, findsNWidgets(3));
+      expect(anyText, findsNWidgets(4));
 
       var quoteText = find.byKey(Key('quote'));
       expect(quoteText, findsOneWidget);
