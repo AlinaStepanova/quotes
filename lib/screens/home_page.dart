@@ -1,10 +1,16 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
 import '../api/rest_client.dart';
 import '../services/quotes_repository.dart';
 import '../utils/constants.dart';
 import '../widgets/icon_with_action.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+
+import '../widgets/offline_status_bar.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -14,12 +20,24 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  ConnectivityResult _connectionStatus = ConnectivityResult.none;
+  final Connectivity _connectivity = Connectivity();
+  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
   Quote? quote = null;
 
   @override
   void initState() {
     super.initState();
+    _initConnectivity();
+    _connectivitySubscription =
+        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
     _getRandomQuote();
+  }
+
+  @override
+  void dispose() {
+    _connectivitySubscription.cancel();
+    super.dispose();
   }
 
   @override
@@ -95,6 +113,10 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ))),
                   buildNextQuoteButton(width, height),
+                  OfflineStatusBar(
+                      isOffline: _connectionStatus == ConnectivityResult.none,
+                      height: height,
+                      width: width)
                 ])
               : Center(child: CircularProgressIndicator())),
     );
@@ -119,11 +141,11 @@ class _HomePageState extends State<HomePage> {
 
   void _loadNextQuote() {
     setState(() => quote = null);
-    _getRandomQuote();
+    _getRandomQuote(_connectionStatus);
   }
 
-  Future<void> _getRandomQuote() async {
-    var randomQuote = await QuotesRepository().getQuote();
+  Future<void> _getRandomQuote([ConnectivityResult? connectionStatus]) async {
+    var randomQuote = await QuotesRepository().getQuote(connectionStatus);
     setState(() => quote = randomQuote);
   }
 
@@ -132,5 +154,23 @@ class _HomePageState extends State<HomePage> {
     await Share.share(Constants.appName,
         subject: quote?.quote ?? "",
         sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);
+  }
+
+  Future<void> _initConnectivity() async {
+    late ConnectivityResult result;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      result = await _connectivity.checkConnectivity();
+    } on PlatformException catch (_) {
+      return;
+    }
+
+    if (!mounted) return Future.value(null);
+
+    return _updateConnectionStatus(result);
+  }
+
+  Future<void> _updateConnectionStatus(ConnectivityResult result) async {
+    setState(() => _connectionStatus = result);
   }
 }
