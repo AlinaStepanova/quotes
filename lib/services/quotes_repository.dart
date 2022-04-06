@@ -6,47 +6,41 @@ import '../api/rest_client.dart';
 import 'local_data_service.dart';
 
 class QuotesRepository with ChangeNotifier {
-  static final QuotesRepository _quotesService = QuotesRepository._internal();
-  QuotesRepository._internal();
-  factory QuotesRepository() {
+  static late QuotesRepository _quotesService;
+
+  late RestClient apiClient;
+  late LocalDataService localDataClient;
+
+  factory QuotesRepository([RestClient? client, LocalDataService? localData]) {
+    _quotesService = QuotesRepository._internal(client, localData);
     return _quotesService;
   }
 
-  final _api = API();
-  final _localData = LocalDataService();
+  QuotesRepository._internal([client, localData]) {
+    apiClient = client ?? API().client;
+    localDataClient = localData ?? LocalDataService();
+  }
 
   Quote? _quote = null;
   Quote? get quote => _quote;
 
-  Future<void> getQuote([ConnectivityResult? connectionStatus]) async {
+  Future<Quote?> getQuote([ConnectivityResult? connectionStatus]) async {
     if (connectionStatus == ConnectivityResult.none) {
-      _quote = await _localData.getLocalQuote();
+      _quote = await localDataClient.getLocalQuote();
     } else {
       try {
-        _quote = await _api.client.getRandomQuote();
+        _quote = await apiClient.getRandomQuote();
       } catch (e) {
-        _quote = await _localData.getLocalQuote();
+        _quote = await localDataClient.getLocalQuote();
       }
     }
 
     notifyListeners();
+    return quote;
   }
 
   void resetSate() {
     _quote = null;
     notifyListeners();
-  }
-
-  @visibleForTesting
-  Future<Quote?> provideQuote(
-      RestClient client, LocalDataService localData) async {
-    Quote? quote = null;
-    try {
-      quote = await client.getRandomQuote();
-    } catch (e) {
-      quote = await localData.getLocalQuote();
-    }
-
-    return quote;
   }
 }
