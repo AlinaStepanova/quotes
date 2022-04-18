@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quotes/utils/constants.dart';
 
-class IconWithAction extends StatefulWidget {
+class IconWithAction extends StatelessWidget {
   final IconData icon;
   final Function onClick;
   final double? size;
@@ -11,11 +11,7 @@ class IconWithAction extends StatefulWidget {
   const IconWithAction(this.icon, this.onClick,
       {this.size, this.iconSize, this.key})
       : super(key: key);
-  @override
-  _IconWithActionState createState() => _IconWithActionState();
-}
 
-class _IconWithActionState extends State<IconWithAction> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -24,12 +20,12 @@ class _IconWithActionState extends State<IconWithAction> {
         color: Colors.white,
         child: InkWell(
           splashColor: Constants.primaryColor,
-          onTap: () => widget.onClick(),
+          onTap: () => onClick(),
           child: SizedBox(
-              width: widget.size ?? width * 0.1,
-              height: widget.size ?? width * 0.1,
-              child: Icon(widget.icon,
-                  size: widget.iconSize ?? width * 0.07, color: Colors.black)),
+              width: size ?? width * 0.1,
+              height: size ?? width * 0.1,
+              child: Icon(icon,
+                  size: iconSize ?? width * 0.07, color: Colors.black)),
         ),
       ),
     );

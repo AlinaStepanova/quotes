@@ -56,7 +56,7 @@ class _HomePageState extends State<HomePage> {
                         child: Align(
                           alignment: Alignment.topRight,
                           child: IconWithAction(
-                            Icons.share,
+                            Icons.adaptive.share,
                             () => _onShare(context),
                           ),
                         )),
