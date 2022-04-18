@@ -112,30 +112,26 @@ class _HomePageState extends State<HomePage> {
                           )
                         ],
                       ))),
-                  buildNextQuoteButton(width, height),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      bottom: height * 0.1,
+                      right: width * 0.075,
+                    ),
+                    child: Align(
+                      alignment: Alignment.bottomRight,
+                      child: IconWithAction(Icons.arrow_forward_ios_rounded,
+                          () => _loadNextQuote(),
+                          size: kIsWeb ? height * 0.15 : width * 0.15,
+                          iconSize: kIsWeb ? height * 0.1 : width * 0.1,
+                          key: Key('nextQuote')),
+                    ),
+                  ),
                   OfflineStatusBar(
                       isOffline: _connectionStatus == ConnectivityResult.none,
                       height: height,
                       width: width)
                 ])
               : Center(child: CircularProgressIndicator())),
-    );
-  }
-
-  Padding buildNextQuoteButton(double width, double height) {
-    return Padding(
-      padding: EdgeInsets.only(
-        bottom: height * 0.1,
-        right: width * 0.075,
-      ),
-      child: Align(
-        alignment: Alignment.bottomRight,
-        child: IconWithAction(
-            Icons.arrow_forward_ios_rounded, () => _loadNextQuote(),
-            size: kIsWeb ? height * 0.15 : width * 0.15,
-            iconSize: kIsWeb ? height * 0.1 : width * 0.1,
-            key: Key('nextQuote')),
-      ),
     );
   }
 
