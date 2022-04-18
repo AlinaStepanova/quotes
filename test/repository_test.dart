@@ -12,7 +12,7 @@ import 'repository_test.mocks.dart';
 
 @GenerateMocks([RestClient, LocalDataService])
 Future<void> main() async {
-  final QuotesRepository repository = QuotesRepository();
+  late QuotesRepository repository;
   late MockRestClient client;
   late MockLocalDataService localStorage;
   late QuoteRemoteDataSourceImpl dataSource;
@@ -35,6 +35,7 @@ Future<void> main() async {
     client = MockRestClient();
     localStorage = MockLocalDataService();
     dataSource = QuoteRemoteDataSourceImpl(client: client);
+    repository = QuotesRepository(client, localStorage);
   });
 
   group('test fetching a quote from api and local storage', () {
@@ -54,7 +55,7 @@ Future<void> main() async {
         () async {
       when(client.getRandomQuote()).thenAnswer((_) async => quotes[0]);
 
-      expect(await repository.provideQuote(client, localStorage), isA<Quote>());
+      expect(await repository.getQuote(), isA<Quote>());
       verify(client.getRandomQuote()).called(1);
       verifyNever(localStorage.getLocalQuote());
     });
@@ -63,7 +64,7 @@ Future<void> main() async {
       when(client.getRandomQuote()).thenThrow(dioError);
       when(localStorage.getLocalQuote()).thenAnswer((_) async => quotes[0]);
 
-      expect(await repository.provideQuote(client, localStorage), isA<Quote>());
+      expect(await repository.getQuote(), isA<Quote>());
       verify(client.getRandomQuote()).called(1);
       verify(localStorage.getLocalQuote()).called(1);
     });
