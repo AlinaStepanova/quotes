@@ -1,5 +1,5 @@
 import 'package:connectivity_plus_platform_interface/src/enums.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import '../api/api.dart';
 import '../api/rest_client.dart';
@@ -7,7 +7,6 @@ import 'local_data_service.dart';
 
 class QuotesRepository with ChangeNotifier {
   static late QuotesRepository _quotesService;
-
   late RestClient apiClient;
   late LocalDataService localDataClient;
 
@@ -35,7 +34,7 @@ class QuotesRepository with ChangeNotifier {
       }
     }
 
-    notifyListeners();
+    //notifyListeners();
     return quote;
   }
 
