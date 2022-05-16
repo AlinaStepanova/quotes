@@ -1,30 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:quotes_app/utils/constants.dart';
+import 'package:quotes/utils/constants.dart';
 
-class IconWithAction extends StatefulWidget {
+class IconWithAction extends StatelessWidget {
   final IconData icon;
-  final double size;
-  final double iconSize;
-  final Function call;
-  const IconWithAction(this.icon, this.size, this.iconSize, this.call);
-  @override
-  _IconWithActionState createState() => _IconWithActionState();
-}
+  final Function onClick;
+  final double? size;
+  final double? iconSize;
+  final Key? key;
 
-class _IconWithActionState extends State<IconWithAction> {
+  const IconWithAction(this.icon, this.onClick,
+      {this.size, this.iconSize, this.key})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
     return ClipOval(
       child: Material(
         color: Colors.white,
         child: InkWell(
           splashColor: Constants.primaryColor,
-          onTap: () => widget.call(),
+          onTap: () => onClick(),
           child: SizedBox(
-              width: widget.size,
-              height: widget.size,
-              child: Icon(widget.icon,
-                  size: widget.iconSize, color: Colors.black)),
+              width: size ?? width * 0.1,
+              height: size ?? width * 0.1,
+              child: Icon(icon,
+                  size: iconSize ?? width * 0.07, color: Colors.black)),
         ),
       ),
     );

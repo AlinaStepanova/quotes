@@ -1,16 +1,12 @@
-# quotes_app
+# Quotes
 
-A new Flutter project.
+The app shows a random quote
 
-## Getting Started
+API - http://quotes.stormconsultancy.co.uk/api
 
-This project is a starting point for a Flutter application.
+<p align="start">
+  <img src="https://user-images.githubusercontent.com/23102335/161256272-bf4a64ac-97c5-467f-b7ca-145c97cc8b85.png" width="25%">
+  <img src="https://user-images.githubusercontent.com/23102335/161256295-e4a9424b-7be1-4183-8040-7e8ba3a0c41f.png" width="25%">
+</p>
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<img width="60%" alt="web" src="https://user-images.githubusercontent.com/23102335/161256317-34342dc1-05dd-4e9e-bcf8-d44299efd6f8.png">

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:quotes_app/utils/constants.dart';
+import 'package:quotes/utils/constants.dart';
 
 import 'api/api.dart';
 import 'screens/home_page.dart';

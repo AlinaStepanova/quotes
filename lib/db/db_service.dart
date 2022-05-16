@@ -1,5 +1,6 @@
-import 'package:quotes_app/db/quote_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+
+import 'quote_model.dart';
 
 class HiveService {
   static final HiveService _hiveService = HiveService._internal();
