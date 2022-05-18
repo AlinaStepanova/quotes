@@ -44,8 +44,16 @@ class MockLocalDataService extends _i1.Mock implements _i4.LocalDataService {
   }
 
   @override
-  _i3.Future<_i2.Quote> getLocalQuote() =>
+  _i3.Future<List<_i2.Quote>> readQuotesFromJson() =>
+      (super.noSuchMethod(Invocation.method(#readQuotesFromJson, []),
+              returnValue: Future<List<_i2.Quote>>.value(<_i2.Quote>[]))
+          as _i3.Future<List<_i2.Quote>>);
+  @override
+  _i2.Quote? getRandomQuote(List<_i2.Quote>? quotes) =>
+      (super.noSuchMethod(Invocation.method(#getRandomQuote, [quotes]))
+          as _i2.Quote?);
+  @override
+  _i3.Future<_i2.Quote?> getLocalQuote() =>
       (super.noSuchMethod(Invocation.method(#getLocalQuote, []),
-              returnValue: Future<_i2.Quote>.value(_FakeQuote_0()))
-          as _i3.Future<_i2.Quote>);
+          returnValue: Future<_i2.Quote?>.value()) as _i3.Future<_i2.Quote?>);
 }

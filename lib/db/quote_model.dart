@@ -1,6 +1,7 @@
 import 'package:hive/hive.dart';
 
 import '../api/rest_client.dart';
+part 'quote_model.g.dart';
 
 @HiveType(typeId: 0)
 class QuoteModel extends HiveObject {
@@ -28,5 +29,9 @@ class QuoteModel extends HiveObject {
         id: quoteFromServer.id,
         author: quoteFromServer.author,
         quote: quoteFromServer.quote);
+  }
+
+  factory QuoteModel.empty() {
+    return QuoteModel(id: -1, author: "", quote: "");
   }
 }

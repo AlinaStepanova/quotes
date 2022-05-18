@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:quotes/db/db_service.dart';
 import 'package:quotes/utils/constants.dart';
 
 import 'api/api.dart';
 import 'screens/home_page.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await API().initDio();
   runApp(MyApp());
 }

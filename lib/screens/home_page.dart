@@ -21,6 +21,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   ConnectivityResult _connectionStatus = ConnectivityResult.none;
+  QuotesRepository _repository = QuotesRepository();
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
   Quote? quote = null;
@@ -28,10 +29,15 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _initConnectivity();
+    init();
     _connectivitySubscription =
         _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
     _getRandomQuote();
+  }
+
+  void init() async {
+    await _repository.initHive();
+    _initConnectivity();
   }
 
   @override
@@ -53,12 +59,27 @@ class _HomePageState extends State<HomePage> {
                     Padding(
                         padding: EdgeInsets.only(
                             top: width * 0.05, right: width * 0.05),
-                        child: Align(
-                          alignment: Alignment.topRight,
-                          child: IconWithAction(
-                            Icons.adaptive.share,
-                            () => _onShare(context),
-                          ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(right: width * 0.01),
+                              child: Align(
+                                alignment: Alignment.topRight,
+                                child: IconWithAction(
+                                  Icons.favorite_border,
+                                  () => _setIsFavorite(),
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.topRight,
+                              child: IconWithAction(
+                                Icons.adaptive.share,
+                                () => _onShare(context),
+                              ),
+                            ),
+                          ],
                         )),
                   Container(
                       padding: EdgeInsets.symmetric(
@@ -141,8 +162,14 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _getRandomQuote([ConnectivityResult? connectionStatus]) async {
-    var randomQuote = await QuotesRepository().getQuote(connectionStatus);
+    var randomQuote = await _repository.getQuote(connectionStatus);
     setState(() => quote = randomQuote);
+  }
+
+  Future<void> _setIsFavorite() async {
+    if (quote != null) {
+      await _repository.setFavorite(quote!);
+    }
   }
 
   void _onShare(BuildContext context) async {
