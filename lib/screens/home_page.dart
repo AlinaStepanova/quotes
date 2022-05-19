@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:quotes/db/quote_model.dart';
 import 'package:share_plus/share_plus.dart';
 import '../api/rest_client.dart';
 import '../services/quotes_repository.dart';
@@ -24,7 +25,7 @@ class _HomePageState extends State<HomePage> {
   QuotesRepository _repository = QuotesRepository();
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
-  Quote? quote = null;
+  QuoteModel? quote = null;
 
   @override
   void initState() {
@@ -67,7 +68,9 @@ class _HomePageState extends State<HomePage> {
                               child: Align(
                                 alignment: Alignment.topRight,
                                 child: IconWithAction(
-                                  Icons.favorite_border,
+                                  quote?.isFavorite == true
+                                      ? Icons.favorite
+                                      : Icons.favorite_border,
                                   () => _setIsFavorite(),
                                 ),
                               ),
@@ -168,7 +171,8 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> _setIsFavorite() async {
     if (quote != null) {
-      await _repository.setFavorite(quote!);
+      var updatedQuote = await _repository.setFavorite(quote!);
+      setState(() => quote = updatedQuote);
     }
   }
 

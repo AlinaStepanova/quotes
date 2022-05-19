@@ -22,8 +22,17 @@ class HiveService {
     box = await Hive.openBox<QuoteModel>(_quotesBox);
   }
 
+  Future<QuoteModel?> getQuote(QuoteModel quote) async {
+    var quoteById = await box.get(quote.id);
+    return quoteById;
+  }
+
   Future<void> addQuote(QuoteModel quote) async {
     await box.put(quote.id, quote);
+  }
+
+  Future<void> removeQuote(QuoteModel quote) async {
+    await box.delete(quote.id);
   }
 
   QuoteModel getQuoteById(int quoteId) {

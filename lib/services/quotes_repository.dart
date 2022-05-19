@@ -24,7 +24,7 @@ class QuotesRepository {
     hiveService = hive ?? HiveService();
   }
 
-  Future<Quote?> getQuote([ConnectivityResult? connectionStatus]) async {
+  Future<QuoteModel?> getQuote([ConnectivityResult? connectionStatus]) async {
     Quote? quote = null;
     if (connectionStatus == ConnectivityResult.none) {
       quote = await localDataClient.getLocalQuote();
@@ -35,13 +35,26 @@ class QuotesRepository {
         quote = await localDataClient.getLocalQuote();
       }
     }
-    return quote;
+    if (quote != null) {
+      var fetchedQuote = QuoteModel.from(quote);
+      var localQuote = await hiveService.getQuote(fetchedQuote);
+      fetchedQuote.isFavorite = localQuote?.isFavorite ?? false;
+      return fetchedQuote;
+    } else {
+      return null;
+    }
   }
 
-  Future<void> setFavorite(Quote quote) async {
-    var quoteModel = QuoteModel.from(quote);
-    quoteModel.isFavorite = true;
-    await hiveService.addQuote(quoteModel);
+  Future<QuoteModel> setFavorite(QuoteModel quoteModel) async {
+    var localQuote = await hiveService.getQuote(quoteModel);
+    if (localQuote != null) {
+      quoteModel.isFavorite = false;
+      await hiveService.removeQuote(quoteModel);
+    } else {
+      quoteModel.isFavorite = true;
+      await hiveService.addQuote(quoteModel);
+    }
+    return quoteModel;
   }
 
   Future<void> initHive() async {
